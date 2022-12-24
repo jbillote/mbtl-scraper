@@ -5,7 +5,7 @@ URL_NAMES = {
     'ciel': 'Ciel',
     'hisui': 'Hisui',
     'kohaku': 'Kohaku',
-    'maids': 'Hisui_%26_Kohaku',
+    'maids': 'Hisui_&_Kohaku',
     'miyako': 'Miyako_Arima',
     'kouma': 'Kouma_Kishima',
     'noel': 'Noel',
