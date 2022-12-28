@@ -11,8 +11,11 @@ class MBTLScraper:
     def __init__(self, character, character_url):
         self.url = BASE_URL.replace('%character%', character_url)
         self.output_path = BASE_OUTPUT_PATH.replace('%character%', character)
+        self.character = character
 
     def scrape_movelist(self):
+        print(f"Scraping move list for {self.character}")
+
         page = requests.get(self.url)
         soup = BeautifulSoup(page.content, 'html.parser')
 
@@ -51,7 +54,11 @@ class MBTLScraper:
 
                 moves[move['input']] = move
 
+        print(f"Saving move list as JSON file for {self.character} to {self.output_path}")
+
         # Save move list as JSON file
         os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
         with open(self.output_path, 'w') as f:
             f.write(json.dumps(moves, indent=1))
+
+        print(f"Finished scraping and saving move list for {self.character} to {self.output_path}")
