@@ -8,8 +8,8 @@ BASE_OUTPUT_PATH = 'movelist/mbtl/%character%.json'
 
 
 class MBTLScraper:
-    def __init__(self, character):
-        self.url = BASE_URL.replace('%character%', character)
+    def __init__(self, character, character_url):
+        self.url = BASE_URL.replace('%character%', character_url)
         self.output_path = BASE_OUTPUT_PATH.replace('%character%', character)
 
     def scrape_movelist(self):
