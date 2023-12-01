@@ -32,7 +32,12 @@ For ease of use, the character parameter uses the following nickname mapping:
 
 If no character is specified, then data is fetched for every character.
 
-Data for characters is scraped from the Mizuumi wiki and saved to JSON files in the `movelist/mbtl` directory in the project directory. The directories are created if they don't exist.
+Data for characters is scraped from the Mizuumi wiki and saved to CSV files in 
+the `movelist/mbtl` directory in the project directory. The directories are 
+created if they don't exist.
 
 ## Dependencies
-This project is dependent on the `beautifulsoup` and `requests` libraries, installed through `pip`. For more information, the full list of library dependencies are in `requirements.txt`, which can be used with `pip` to install all the required libraries.
+This project is dependent on the `beautifulsoup` and `requests` libraries, 
+installed through `pip`. For more information, the full list of library 
+dependencies are in `requirements.txt`, which can be used with `pip` to install 
+all the required libraries.
