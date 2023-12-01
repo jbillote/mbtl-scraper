@@ -1,13 +1,18 @@
-from characters import URL_NAMES
-from mbtl import MBTLScraper
+from db import MBTLDB
 
 import sys
 
-if len(sys.argv) <= 1:
-    for c in URL_NAMES:
-        scraper = MBTLScraper(c, URL_NAMES[c])
-        scraper.scrape_movelist()
-else:
-    if sys.argv[1] in URL_NAMES:
-        scraper = MBTLScraper(sys.argv[1], URL_NAMES[sys.argv[1]])
-        scraper.scrape_movelist()
+
+def connect_to_db() -> MBTLDB:
+    if len(sys.argv) < 2:
+        print('Path to database not provided')
+        sys.exit(2)
+    else:
+        print('Connecting to database')
+        return MBTLDB(sys.argv[1])
+
+
+if __name__ == '__main__':
+    mbtl_db = connect_to_db()
+    print('Initializing database')
+    mbtl_db.init_db()

@@ -2,4 +2,5 @@ movelist/*
 .idea/*
 __pycache__/*
 venv/*
+db/*
 
