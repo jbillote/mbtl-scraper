@@ -1,10 +1,10 @@
 from bs4 import BeautifulSoup
-import json
+import csv
 import os
 import requests
 
 BASE_URL = 'https://wiki.gbl.gg/w/Melty_Blood/MBTL/%character%'
-BASE_OUTPUT_PATH = 'movelist/mbtl/%character%.json'
+BASE_OUTPUT_PATH = 'movelist/mbtl/%character%.csv'
 
 
 class MBTLScraper:
@@ -19,7 +19,7 @@ class MBTLScraper:
         page = requests.get(self.url)
         soup = BeautifulSoup(page.content, 'html.parser')
 
-        moves = {}
+        moves = []
 
         move_tables = soup.findAll(class_='movedata-container')
         for t in move_tables:
@@ -52,13 +52,14 @@ class MBTLScraper:
                 move['advantage'] = cells[4].text.strip()
                 move['invuln'] = cells[5].text.strip()
 
-                moves[move['input']] = move
+                moves.append(move)
 
-        print(f"Saving move list as JSON file for {self.character} to {self.output_path}")
+        print(f"Saving move list as CSV file for {self.character} to {self.output_path}")
 
-        # Save move list as JSON file
         os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
         with open(self.output_path, 'w') as f:
-            f.write(json.dumps(moves, indent=1))
+            w = csv.DictWriter(f, moves[0].keys())
+            w.writeheader()
+            w.writerows(moves)
 
         print(f"Finished scraping and saving move list for {self.character} to {self.output_path}")
