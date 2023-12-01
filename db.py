@@ -65,7 +65,7 @@ class MBTLDB:
             moves = scraper.scrape_movelist()
             
             cursor = self.conn.cursor()
-            cursor.execute(INSERT_CHARACTER.format(c, URL_NAMES[c]))
+            cursor.execute(INSERT_CHARACTER.format(URL_NAMES[c], c))
             self.conn.commit()
             char_id = cursor.lastrowid
 
