@@ -7,6 +7,24 @@ BASE_URL = 'https://wiki.gbl.gg/w/Melty_Blood/MBTL/%character%'
 BASE_OUTPUT_PATH = 'movelist/mbtl/%character%.csv'
 
 
+class MBTLMove(object):
+    def __init__(self, data: dict):
+        self.name = data['name']
+        self.input = data['input']
+        self.damage = data['damage']
+        self.block = data['block']
+        self.cancel = data['cancel']
+        self.property = data['property']
+        self.cost = data['cost']
+        self.attribute = data['attribute']
+        self.startup = data['startup']
+        self.active = data['active']
+        self.recovery = data['recovery']
+        self.overall = data['overall']
+        self.advantage = data['advantage']
+        self.invuln = data['invuln']
+
+
 class MBTLScraper:
     def __init__(self, character, character_url):
         self.url = BASE_URL.replace('%character%', character_url)
@@ -23,11 +41,16 @@ class MBTLScraper:
 
         move_tables = soup.findAll(class_='movedata-container')
         for t in move_tables:
-            inputs = t.findAll(class_='movedata-flex-framedata-name-item movedata-flex-framedata-name-item-middle')
-            for i in inputs:
-                move = {'name': t.previous_sibling.previous_sibling.text.strip(), 'input': i.text.strip()}
+            name = t.find_next(class_='movedata-flex-image-container').find_next('big').text.strip()
+            inputs = t.findAll(class_='movedata-flex-framedata')
 
-                info_table = i.parent.parent.findNextSibling()
+            for i in inputs:
+                move = {}
+
+                move['name'] = name
+                move['input'] = i.find(class_='movedata-flex-framedata-name-item movedata-flex-framedata-name-item-middle').text.strip()
+
+                info_table = i.find(class_='wikitable movedata-flex-framedata-table')
                 info_rows = info_table.findAll(style='text-align:center; height:29px;')
 
                 # First row
