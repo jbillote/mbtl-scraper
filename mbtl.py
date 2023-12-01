@@ -26,18 +26,19 @@ class MBTLMove(object):
 
 
 class MBTLScraper:
-    def __init__(self, character, character_url):
+    def __init__(self, character: str, character_url: str):
         self.url = BASE_URL.replace('%character%', character_url)
         self.output_path = BASE_OUTPUT_PATH.replace('%character%', character)
         self.character = character
 
-    def scrape_movelist(self):
+    def scrape_movelist(self) -> list:
         print(f"Scraping move list for {self.character}")
 
         page = requests.get(self.url)
         soup = BeautifulSoup(page.content, 'html.parser')
 
         moves = []
+        move_objects = []
 
         move_tables = soup.findAll(class_='movedata-container')
         for t in move_tables:
@@ -76,6 +77,7 @@ class MBTLScraper:
                 move['invuln'] = cells[5].text.strip()
 
                 moves.append(move)
+                move_objects.append(MBTLMove(move))
 
         print(f"Saving move list as CSV file for {self.character} to {self.output_path}")
 
@@ -86,3 +88,5 @@ class MBTLScraper:
             w.writerows(moves)
 
         print(f"Finished scraping and saving move list for {self.character} to {self.output_path}")
+
+        return move_objects

@@ -2,7 +2,11 @@
 For scraping move information from Mizuumi
 
 Since this is a utility just for fetching and saving static web data, liberties 
-such as not securely generating SQL queries are taken.
+such as not securely making SQL INSERT statements are taken.
+
+In the future, I'm planning on cleaning up the code to make it more secure and 
+easier to read, as well as making it easier to support other games. For now, 
+the ony goal was to write something that would write data as needed.
 
 ## Usage
 python main.py \<path_to_db>

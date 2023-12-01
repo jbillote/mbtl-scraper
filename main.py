@@ -16,3 +16,4 @@ if __name__ == '__main__':
     mbtl_db = connect_to_db()
     print('Initializing database')
     mbtl_db.init_db()
+    mbtl_db.populate_db()
